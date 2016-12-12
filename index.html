@@ -828,13 +828,22 @@ hljs.initHighlightingOnLoad();
 <div class="slideContent" >
 <p>The server calculation can be summarized as follows:</p>
 
-<pre><code class="r">    diamonds &lt;- diamonds %&gt;% select(price, carat, cut, color, clarity)
-    model &lt;- lm(price ~ .*., data=diamonds)
-    result &lt;- predict(model, input)
-    output$hist = renderPlot({ggplot(diamonds, aes(price))
-        + geom_histogram() + geom_vline(aes(xintercept=result))})
-    output$value = renderText({round(result, 2))})
-    output$bling = renderText({round(100*sum(diamonds$price&lt;result) / nrow(diamonds), 2))})
+<pre><code class="r">diamonds &lt;- diamonds %&gt;% select(price, carat, cut, color, clarity)
+model &lt;- lm(price ~ .*., data=diamonds)
+result &lt;- predict(model, input)
+
+output$hist = 
+    renderPlot({ggplot(diamonds, aes(price))
+    + geom_histogram()
+    + geom_vline(aes(xintercept=result))
+})
+output$value = renderText({
+    round(result, 2))
+})
+output$bling = renderText({
+    round(100*sum(diamonds$price&lt;result)
+    / nrow(diamonds), 2))
+})
 </code></pre>
 
 </div>

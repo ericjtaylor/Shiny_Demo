@@ -33,13 +33,22 @@ The server calculation can be summarized as follows:
 
 
 ```r
-    diamonds <- diamonds %>% select(price, carat, cut, color, clarity)
-    model <- lm(price ~ .*., data=diamonds)
-    result <- predict(model, input)
-    output$hist = renderPlot({ggplot(diamonds, aes(price))
-        + geom_histogram() + geom_vline(aes(xintercept=result))})
-    output$value = renderText({round(result, 2))})
-    output$bling = renderText({round(100*sum(diamonds$price<result) / nrow(diamonds), 2))})
+diamonds <- diamonds %>% select(price, carat, cut, color, clarity)
+model <- lm(price ~ .*., data=diamonds)
+result <- predict(model, input)
+
+output$hist = 
+    renderPlot({ggplot(diamonds, aes(price))
+    + geom_histogram()
+    + geom_vline(aes(xintercept=result))
+})
+output$value = renderText({
+    round(result, 2))
+})
+output$bling = renderText({
+    round(100*sum(diamonds$price<result)
+    / nrow(diamonds), 2))
+})
 ```
 
 Is it Accurate?
