@@ -51,5 +51,3 @@ The model provides the percentile rank of diamond by referencing the overall dia
 ```
 
 There is room for improvement. This model is just a proof of concept, it can be further refined and enhanced.
-
-## Thank you!
