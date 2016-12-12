@@ -5,7 +5,7 @@ shinyUI(fluidPage(
   sidebarLayout(
     sidebarPanel(
         h3("Input:"),
-        h5("Please enter diamond characteristics."),
+        h5("Please enter diamond characteristics, so that I can estimate the value."),
         sliderInput("carat","Carats:",min = 0.2,max = 5.0,value = 0.7, step= 0.1),
         selectInput("cut", "Cut:", 
                     choices = list("Fair" = "Fair", "Good" = "Good", "Very Good" = "Very Good", "Premium" = "Premium", "Ideal" = "Ideal"), 

@@ -36,7 +36,8 @@ The model provides the percentile rank of diamond by referencing the overall dia
 Model Code
 ========================================================
 
-```{r, eval=FALSE}
+
+```r
     library(ggplot2)
     library(dplyr)
 
@@ -52,17 +53,6 @@ Model Code
 Is it Accurate?
 ========================================================
 
-```{r, echo=FALSE, message=FALSE}
-    library(ggplot2)
-    library(dplyr)
-
-    diamonds <- diamonds %>%
-        select(price, carat, cut, color, clarity)
-
-    model <- lm(price ~ .*., data=diamonds)
-    
-    accuracy <- data.frame(predicted = predict(model, diamonds),actual = diamonds$price)
-    ggplot(accuracy, aes(predicted, actual)) + geom_point(size=1, alpha = 0.02) + geom_abline(intercept = 0, slope = 1)
-```
+![plot of chunk unnamed-chunk-2](rpresentation-figure/unnamed-chunk-2-1.png)
 
 There is room for improvement, with some clear non-linear effects. This model is just a proof of concept, it can be further refined and enhanced.
