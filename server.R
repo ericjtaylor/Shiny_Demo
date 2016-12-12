@@ -18,10 +18,8 @@ shinyServer(function(input, output) {
     
     output$hist = renderPlot({
         test2 <- head(diamonds, 1)
-        str(test2)
         a <- data.frame(price=0, carat=input$carat, cut=input$cut, color=input$color, clarity=input$clarity)#, carat2=input$carat^2, carat3=input$carat^3)
         test2 <- tail(rbind(test2, a), 1)
-        str(test2)
         predict(model, test2)
         result <- predict(model, test2)
         ggplot(diamonds, aes(price)) + geom_histogram() + geom_vline(aes(xintercept=result))
@@ -29,10 +27,8 @@ shinyServer(function(input, output) {
 
     output$value = renderText({
         test2 <- head(diamonds, 1)
-        str(test2)
         a <- data.frame(price=0, carat=input$carat, cut=input$cut, color=input$color, clarity=input$clarity)#, carat2=input$carat^2, carat3=input$carat^3)
         test2 <- tail(rbind(test2, a), 1)
-        str(test2)
         predict(model, test2)
         result <- predict(model, test2)
         paste("This diamond is valued at an estimated $", round(result, 2), " USD.")
@@ -40,10 +36,8 @@ shinyServer(function(input, output) {
     
     output$bling = renderText({
         test2 <- head(diamonds, 1)
-        str(test2)
         a <- data.frame(price=0, carat=input$carat, cut=input$cut, color=input$color, clarity=input$clarity)#, carat2=input$carat^2, carat3=input$carat^3)
         test2 <- tail(rbind(test2, a), 1)
-        str(test2)
         predict(model, test2)
         result <- predict(model, test2)
         paste("This diamond is more expensive than ", round(100*sum(diamonds$price<result) / nrow(diamonds), 2), "% of diamonds.")

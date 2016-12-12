@@ -818,15 +818,9 @@ hljs.initHighlightingOnLoad();
 <li>Clarity</li>
 </ol>
 
-<p>Users then simply enter in the 4 Cs of the diamond they are considering, and report is generated advising them on their purchase.</p>
+<p>Users then simply enter in the 4 Cs of the diamond they are considering, and report is generated advising them on their purchase. </p>
 
-</div>
-
-</section>
-<section data-transition="linear" data-transition-speed="default">
-<h3>What are the features?</h3>
-<div class="slideContent" >
-<p>The model provides an estimated price. This is a point of reference to show if the store is <strong>charging too much</strong>.</p>
+<p>The model provides an estimated price. This is a point of reference to show if the store is <strong>charging too much</strong>. </p>
 
 <p>The model provides the percentile rank of diamond by referencing the overall diamonds dataset. This is a point of reference to show if the diamond&#39;s value is <strong>below the average purchase price</strong>.</p>
 
@@ -836,16 +830,24 @@ hljs.initHighlightingOnLoad();
 <section data-transition="linear" data-transition-speed="default">
 <h3>Model Code</h3>
 <div class="slideContent" >
+<p>The server calculation can be summarized as follows:</p>
+
 <pre><code class="r">    library(ggplot2)
     library(dplyr)
 
-    diamonds &lt;- diamonds %&gt;%
-        select(price, carat, cut, color, clarity)
-
+    diamonds &lt;- diamonds %&gt;% select(price, carat, cut, color, clarity)
     model &lt;- lm(price ~ .*., data=diamonds)
+    result &lt;- predict(model, input)
 
-    accuracy &lt;- data.frame(predicted = predict(model, diamonds),actual = diamonds$price)
-    ggplot(accuracy, aes(predicted, actual)) + geom_point(size=1, alpha = 0.02) + geom_abline(intercept = 0, slope = 1)
+    output$hist = renderPlot({
+        ggplot(diamonds, aes(price)) + geom_histogram() + geom_vline(aes(xintercept=result))
+    })
+    output$value = renderText({
+        paste(&quot;This diamond is valued at an estimated $&quot;, round(result, 2), &quot; USD.&quot;)
+    })
+    output$bling = renderText({
+        paste(&quot;This diamond is more expensive than &quot;, round(100*sum(diamonds$price&lt;result) / nrow(diamonds), 2), &quot;% of diamonds.&quot;)
+    })
 </code></pre>
 
 </div>
